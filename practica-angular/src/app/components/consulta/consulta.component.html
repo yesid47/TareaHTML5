@@ -1,0 +1,48 @@
+<div class="bloqueDeTexto">
+    <h2>Bienvenido al sistema de consulta de notas</h2>
+    <h4 text-align='center'>Presione el boton para ver las notas de los estudiantes</h4>
+    
+    <h5>La fecha actual es=<div class="fecha">{{fecha | date: 'dd/MM/yyyy'}}</div> </h5>
+    
+    <br>
+    <button *ngIf="isHabilitado==false" type="button" (click)="mostrar()" class="btn btn-primary">Ver notas</button>
+    <button *ngIf="isHabilitado==true" type="button" (click)="mostrar()" class="btn btn-warning">Ocultar notas</button>
+    
+    </div>
+    
+    
+    <table class="tableMia" *ngIf="isHabilitado">
+      <thead>
+        <tr>
+          <th scope="col">Código</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Apellido</th>
+          <th scope="col">Nota</th>
+          <th scope="col">Observación</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let estudiante of estudiantes">
+        <tr *ngIf="estudiante.nota>=3.0 else elseBlock" >
+              <td>{{estudiante.codigo}}</td>
+              <td>{{estudiante.nombre}}</td>
+              <td>{{estudiante.apellido}}</td>
+              <td>{{estudiante.nota}}</td>
+              <td >
+                  <div *ngIf="estudiante.nota>=3.0 else elseBlock">Aprobó</div>
+                 <ng-template  #elseBlock><div>Reprobó</div></ng-template>
+              </td>
+        </tr>
+        <ng-template #elseBlock>
+          <tr class="colorRed">
+              <td>{{estudiante.codigo}}</td>
+              <td>{{estudiante.nombre}}</td>
+              <td>{{estudiante.apellido}}</td>
+              <td>{{estudiante.nota}}</td>
+              <td >
+                  <div *ngIf="estudiante.nota>=3.0 else elseBlock">Aprobó</div>
+                 <ng-template  #elseBlock><div>Reprobó</div></ng-template>
+              </td>
+            </tr>
+        </ng-template>
+      </tbody>
+    </table>
